@@ -1,0 +1,211 @@
+"""
+4
+4
+- V V -
+S C X -
+- X - -
+- - - -
+right
+Christmas morning
+
+"""
+def left(santa_position, presents_from_santa, matrix, nice_kids, nice_kids_with_gifts, is_all_nice_kids_have_presents, is_out_of_presents):
+    if santa_position[1] - 1 >= 0:
+        if matrix[santa_position[0]][santa_position[1]-1] == "-" or \
+                matrix[santa_position[0]][santa_position[1]-1] == "X":
+            matrix[santa_position[0]][santa_position[1]] = "-"
+            matrix[santa_position[0]][santa_position[1] - 1] = "S"
+            santa_position[1] = santa_position[1] -1
+        elif matrix[santa_position[0]][santa_position[1]-1] == "V":
+            presents_from_santa -= 1
+            nice_kids_with_gifts += 1
+            matrix[santa_position[0]][santa_position[1]] = "-"
+            matrix[santa_position[0]][santa_position[1] - 1] = "S"
+            santa_position[1] = santa_position[1] - 1
+        elif matrix[santa_position[0]][santa_position[1] - 1] == "C":
+            matrix[santa_position[0]][santa_position[1]] = "-"
+            matrix[santa_position[0]][santa_position[1] - 1] = "S"
+            santa_position[1] = santa_position[1] - 1
+            presents_from_santa, nice_kids_with_gifts, matrix = cookie(santa_position, presents_from_santa, nice_kids, nice_kids_with_gifts, matrix)
+
+    if nice_kids == nice_kids_with_gifts:
+        is_all_nice_kids_have_presents = True
+    if presents_from_santa == 0:
+        is_out_of_presents = True
+        if is_all_nice_kids_have_presents == False:
+            print("Santa ran out of presents!")
+           
+
+    return santa_position, presents_from_santa, matrix, nice_kids_with_gifts, is_all_nice_kids_have_presents, is_out_of_presents
+
+
+
+def cookie(santa_position, presents_from_santa, nice_kids, nice_kids_with_gifts,  matrix):
+    if matrix[santa_position[0]][santa_position[1]-1] == "X":
+        presents_from_santa -= 1
+        matrix[santa_position[0]][santa_position[1] - 1] = "-"
+    if matrix[santa_position[0]][santa_position[1]-1] == "V":
+        nice_kids_with_gifts +=1
+        presents_from_santa -=1
+        matrix[santa_position[0]][santa_position[1] - 1] = "-"
+    if matrix[santa_position[0]][santa_position[1]+1] == "X":
+        presents_from_santa -= 1
+        matrix[santa_position[0]][santa_position[1] + 1] = "-"
+    if matrix[santa_position[0]][santa_position[1]+1] == "V":
+        matrix[santa_position[0]][santa_position[1] + 1] = "-"
+        nice_kids_with_gifts += 1
+        presents_from_santa -= 1
+    if matrix[santa_position[0]-1][santa_position[1]] == "X":
+        presents_from_santa -= 1
+        matrix[santa_position[0] - 1][santa_position[1]] = "-"
+    if matrix[santa_position[0]-1][santa_position[1]] == "V":
+        nice_kids_with_gifts +=1
+        presents_from_santa -=1
+        matrix[santa_position[0] - 1][santa_position[1]] = "-"
+    if matrix[santa_position[0]+1][santa_position[1]] == "X":
+        presents_from_santa -= 1
+        matrix[santa_position[0] + 1][santa_position[1]] = "-"
+    if matrix[santa_position[0]+1][santa_position[1]] == "V":
+        matrix[santa_position[0] + 1][santa_position[1]] = "-"
+        nice_kids_with_gifts +=1
+        presents_from_santa -=1
+    return presents_from_santa, nice_kids_with_gifts, matrix
+
+
+def right(santa_position, presents_from_santa, matrix, nice_kids, nice_kids_with_gifts, is_all_nice_kids_have_presents, is_out_of_presents):
+    if santa_position[1] + 1 <= len(matrix):
+        if matrix[santa_position[0]][santa_position[1]+1] == "-" or \
+                matrix[santa_position[0]][santa_position[1]+1] == "X":
+            matrix[santa_position[0]][santa_position[1]] = "-"
+            matrix[santa_position[0]][santa_position[1] + 1] = "S"
+            santa_position[1] = santa_position[1] +1
+        elif matrix[santa_position[0]][santa_position[1]+1] == "V":
+            presents_from_santa -= 1
+            nice_kids_with_gifts += 1
+            matrix[santa_position[0]][santa_position[1]] = "-"
+            matrix[santa_position[0]][santa_position[1] + 1] = "S"
+            santa_position[1] = santa_position[1] + 1
+        elif matrix[santa_position[0]][santa_position[1] + 1] == "C":
+            matrix[santa_position[0]][santa_position[1]] = "-"
+            matrix[santa_position[0]][santa_position[1] + 1] = "S"
+            santa_position[1] = santa_position[1] + 1
+            presents_from_santa, nice_kids_with_gifts, matrix = cookie(santa_position, presents_from_santa, nice_kids, nice_kids_with_gifts, matrix)
+
+    if nice_kids == nice_kids_with_gifts:
+        is_all_nice_kids_have_presents = True
+    if presents_from_santa == 0:
+        is_out_of_presents = True
+        if not is_all_nice_kids_have_presents:
+            print("Santa ran out of presents!")
+            
+
+    return santa_position, presents_from_santa, matrix, nice_kids_with_gifts, is_all_nice_kids_have_presents, is_out_of_presents
+
+
+def up(santa_position, presents_from_santa, matrix, nice_kids, nice_kids_with_gifts, is_all_nice_kids_have_presents, is_out_of_presents):
+    if santa_position[0] - 1 >= 0:
+        if matrix[santa_position[0]-1][santa_position[1]] == "-" or \
+                matrix[santa_position[0]-1][santa_position[1]] == "X":
+            matrix[santa_position[0]][santa_position[1]] = "-"
+            matrix[santa_position[0]-1][santa_position[1]] = "S"
+            santa_position[0] = santa_position[0] -1
+
+        elif matrix[santa_position[0]-1][santa_position[1]] == "V":
+            presents_from_santa -= 1
+            nice_kids_with_gifts += 1
+            matrix[santa_position[0]][santa_position[1]] = "-"
+            matrix[santa_position[0] - 1][santa_position[1]] = "S"
+            santa_position[0] = santa_position[0] - 1
+        elif matrix[santa_position[0]-1][santa_position[1]] == "C":
+            matrix[santa_position[0]][santa_position[1]] = "-"
+            matrix[santa_position[0] - 1][santa_position[1]] = "S"
+            santa_position[0] = santa_position[0] - 1
+            presents_from_santa, nice_kids_with_gifts, matrix = cookie(santa_position, presents_from_santa, nice_kids, nice_kids_with_gifts, matrix)
+
+    if nice_kids == nice_kids_with_gifts:
+        is_all_nice_kids_have_presents = True
+    if presents_from_santa == 0:
+        is_out_of_presents = True
+        if is_all_nice_kids_have_presents == False:
+            print("Santa ran out of presents!")
+            
+
+    return santa_position, presents_from_santa, matrix, nice_kids_with_gifts, is_all_nice_kids_have_presents, is_out_of_presents
+
+def down(santa_position, presents_from_santa, matrix, nice_kids, nice_kids_with_gifts, is_all_nice_kids_have_presents, is_out_of_presents):
+    if santa_position[0] + 1 <= len(matrix):
+        if matrix[santa_position[0]+1][santa_position[1]] == "-" or \
+                matrix[santa_position[0]+1][santa_position[1]] == "X":
+            matrix[santa_position[0]][santa_position[1]] = "-"
+            matrix[santa_position[0] + 1][santa_position[1]] = "S"
+            santa_position[0] = santa_position[0] +1
+        elif matrix[santa_position[0]+1][santa_position[1]] == "V":
+            presents_from_santa -= 1
+            nice_kids_with_gifts += 1
+            matrix[santa_position[0]][santa_position[1]] = "-"
+            matrix[santa_position[0] + 1][santa_position[1]] = "S"
+            santa_position[0] = santa_position[0] + 1
+        elif matrix[santa_position[0]+1][santa_position[1]] == "C":
+            matrix[santa_position[0]][santa_position[1]] = "-"
+            matrix[santa_position[0] + 1][santa_position[1]] = "S"
+            santa_position[0] = santa_position[0] + 1
+            presents_from_santa, nice_kids_with_gifts, matrix = cookie(santa_position, presents_from_santa, nice_kids, nice_kids_with_gifts, matrix)
+
+    if nice_kids == nice_kids_with_gifts:
+        is_all_nice_kids_have_presents = True
+    if presents_from_santa == 0:
+        is_out_of_presents = True
+        if not is_all_nice_kids_have_presents:
+            print("Santa ran out of presents!")
+           
+
+    return santa_position, presents_from_santa, matrix, nice_kids_with_gifts, is_all_nice_kids_have_presents, is_out_of_presents
+
+
+
+presents_from_santa = int(input()) #number of presents Santa has
+n = int(input()) #neighborhood
+matrix = []
+santa_position = []
+nice_kids = 0
+nice_kids_with_gifts = 0
+given_gifts = 0
+is_all_nice_kids_have_presents = False
+is_out_of_presents = False
+
+for row in range(n):
+    matrix.append(input().split())
+
+for row in range(len(matrix)):
+    for col in range(len(matrix[row])):
+        if matrix[row][col] == "S":
+            santa_position = [row, col]
+        if matrix[row][col] == "V":
+            nice_kids += 1
+
+command = input()
+
+while command != "Christmas morning":
+    if command == "left":
+        santa_position, presents_from_santa,matrix, nice_kids_with_gifts, is_all_nice_kids_have_presents, is_out_of_presents = left(santa_position, presents_from_santa, matrix, nice_kids, nice_kids_with_gifts, is_all_nice_kids_have_presents, is_out_of_presents)
+    elif command == "right":
+        santa_position, presents_from_santa,matrix, nice_kids_with_gifts, is_all_nice_kids_have_presents, is_out_of_presents = right(santa_position, presents_from_santa, matrix, nice_kids, nice_kids_with_gifts, is_all_nice_kids_have_presents, is_out_of_presents)
+    elif command == "up":
+        santa_position, presents_from_santa,matrix, nice_kids_with_gifts, is_all_nice_kids_have_presents, is_out_of_presents = up(santa_position, presents_from_santa, matrix, nice_kids, nice_kids_with_gifts, is_all_nice_kids_have_presents, is_out_of_presents)
+    elif command == "down":
+        santa_position, presents_from_santa,matrix, nice_kids_with_gifts, is_all_nice_kids_have_presents, is_out_of_presents = down(santa_position, presents_from_santa, matrix, nice_kids, nice_kids_with_gifts, is_all_nice_kids_have_presents, is_out_of_presents)
+    if is_out_of_presents:
+        break
+
+    command = input()
+
+for r in range(len(matrix)):
+    for c in range(len(matrix[r])):
+        print(matrix[r][c], end=" ")
+    print()
+
+if is_all_nice_kids_have_presents:
+    print(f"Good job, Santa! {nice_kids} happy nice kid/s.")
+else:
+    diff = nice_kids - nice_kids_with_gifts
+    print(f"No presents for {diff} nice kid/s.")
